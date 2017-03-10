@@ -1,0 +1,21 @@
+{
+  "name": "exercise-rest",
+  "version": "1.0.0",
+  "description": "RESTful API for the Exercise-DB",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.14.1",
+    "pg": "^6.1.2",
+    "pg-pool": "^1.6.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git:https://github.com/DrewTbay/Exercise_RESTful.git"
+  },
+  "author": "Drew Reid",
+  "license": "ISC"
+}
