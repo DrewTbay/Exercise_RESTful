@@ -4,6 +4,8 @@
   "description": "RESTful API for the Exercise-DB",
   "main": "server.js",
   "dependencies": {
+    "bcrypt": "^1.0.2",
+    "body-parser": "^1.17.1",
     "express": "^4.14.1",
     "pg": "^6.1.2",
     "pg-pool": "^1.6.0"

@@ -1,8 +1,8 @@
-var pool = require(__dirname + '/../global.js').pool;
+var dbPool = require(__dirname + '/../global.js').dbPool;
 
-//Start connection pool
+
 function getSchedules(req, res, next) {
-	pool.query('SELECT schedule_name FROM schedules', function (err, data) {
+	dbPool.query('SELECT schedule_name FROM schedules', function (err, data) {
 		res.json({
 			status: 'successful',
 			data: data,

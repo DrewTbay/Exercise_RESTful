@@ -1,14 +1,28 @@
 //require libs
 var express = require('express');
+var bodyParser = require('body-parser');
 
 //global vars
 var app = express();
-var queries = require('./router/schedules');
+app.use(bodyParser.urlencoded({ extended : false}));
+app.use(bodyParser.json());
 
-app.get('/schedules', queries.getSchedules);
+var schedule = require('./router/schedules');
+var user = require('./router/users');
+
+//User functionality
+app.post('/user', user.createUser);
+//app.get('/user', user.loginUser);
+
+app.get('/schedules', schedule.getSchedules);
 
 app.listen(4000);
 console.log('listening on port 4000');
 
-
-
+app.use(function(err, req, res, next){
+	res.status(err.status || 500)
+		.json({
+			status: 'error',
+			message: err	
+		});
+});
