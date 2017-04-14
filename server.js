@@ -12,17 +12,9 @@ var user = require('./router/users');
 
 //User functionality
 app.post('/user', user.createUser);
-//app.get('/user', user.loginUser);
+app.get('/user', user.loginUser);
 
 app.get('/schedules', schedule.getSchedules);
 
 app.listen(4000);
 console.log('listening on port 4000');
-
-app.use(function(err, req, res, next){
-	res.status(err.status || 500)
-		.json({
-			status: 'error',
-			message: err	
-		});
-});
