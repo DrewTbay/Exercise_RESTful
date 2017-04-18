@@ -11,8 +11,10 @@ var schedule = require('./router/schedules');
 var user = require('./router/users');
 
 //User functionality
-app.post('/user', user.createUser);
-app.get('/user', user.loginUser);
+app.post('/user/create', user.createUser);
+app.post('/user/login', user.loginUser);
+app.get('/user/check/name/:name', user.checkName);
+app.get('/user/check/email/:email', user.checkEmail)
 
 app.get('/schedules', schedule.getSchedules);
 

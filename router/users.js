@@ -77,6 +77,57 @@ function loginUser() {
     
 }
 
+function checkName(req, res, next) {
+    let validation = {};
+
+    validation = validateString(req.params.name, 'No username provided')
+    if (validation.error) {
+	res.status(validation.info.status).json(validation.info.response);
+	return;
+    }
+
+     dbPool.query('SELECT user_name FROM users WHERE user_name = $1::text', 
+	 [req.params.name],
+	 function (err, result) {
+	     if (err) {
+		 reply = formatResponse(409, err, 'Query Error: check failed');
+		 res.status(reply.status).json(reply.response);
+		 return;
+	     } else {
+		 if (result.rowCount > 0) reply = formatResponse(200, {user_name_used: true}, 'Username is already in use');
+		 else reply = formatResponse(200, {user_name_used: false}, 'Username is free to use');
+		 res.status(reply.status).json(reply.response);
+		 return;
+	     }	 
+	 });
+}
+
+function checkEmail(req, res, next) {
+    let validation = {};
+    
+    validation = validateString(req.params.email, 'No email provided')
+    if (validation.error) {
+	res.status(validation.info.status).json(validation.info.response);
+	return;
+    }
+
+     dbPool.query('SELECT user_email FROM users WHERE user_email = $1::text', 
+	 [req.params.email],
+	 function (err, result) {
+	     if (err) {
+		 reply = formatResponse(409, err, 'Query Error: check failed');
+		 res.status(reply.status).json(reply.response);
+		 return;
+	     } else {
+		 if (result.rowCount > 0) reply = formatResponse(200, {user_email_used: true}, 'Email is already in use');
+		 else reply = formatResponse(200, {user_email_used: false}, 'Email is free to use');
+		 res.status(reply.status).json(reply.response);
+		 return;
+	     }	 
+	 });
+
+}
+
 function validateString(importString, failedMessage){
     return !importString ? {error: true, info: formatResponse(400, {}, failedMessage)} : {error: false, info: {}}
 }
@@ -94,6 +145,8 @@ function formatDatabaseResults(result){
 }
 
 module.exports= {
+    checkName: checkName,
+    checkEmail: checkEmail,
     createUser: createUser,
     loginUser: loginUser
 }
